@@ -1,0 +1,15 @@
+asgiref==3.11.0
+certifi==2025.11.12
+charset-normalizer==3.4.4
+Django==5.2.8
+djangorestframework==3.16.1
+idna==3.11
+requests==2.32.5
+sqlparse==0.5.4
+tzdata==2025.2
+urllib3==2.5.0
+wakatime==14.0.1
+gunicorn==23.0.0
+whitenoise==6.7.0
+dj-database-url==2.2.0
+psycopg2-binary==2.9.9

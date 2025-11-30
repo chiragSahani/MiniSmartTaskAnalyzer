@@ -14,9 +14,7 @@ class Task(models.Model):
         return self.title
 
     def to_dict(self):
-        """
-        Convert model instance to domain-compatible dict.
-        """
+
         return {
             'id': self.id,
             'title': self.title,

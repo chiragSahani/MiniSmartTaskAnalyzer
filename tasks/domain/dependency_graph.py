@@ -1,33 +1,27 @@
 
 def build_dependency_graph(tasks):
-    """
-    Builds a graph where key is task_id and value is list of dependency task_ids.
-    tasks: list of task dicts, expected to have 'id' and 'dependencies' (list of ids)
-    """
+
     graph = {}
     for task in tasks:
         t_id = task.get('id')
         if t_id is not None:
-            # Ensure dependencies are a list of IDs
+
             deps = task.get('dependencies', [])
-            # If deps are objects, extract IDs (handle both cases)
+
             dep_ids = []
             for d in deps:
                 if isinstance(d, dict):
                     dep_ids.append(d.get('id'))
-                elif hasattr(d, 'id'): # Django model
+                elif hasattr(d, 'id'):
                     dep_ids.append(d.id)
                 else:
-                    dep_ids.append(d) # Assume it's an ID
+                    dep_ids.append(d)
             
             graph[t_id] = dep_ids
     return graph
 
 def detect_cycles(graph):
-    """
-    Returns a list of task IDs involved in a cycle, or None if no cycle.
-    Uses DFS.
-    """
+
     visited = set()
     recursion_stack = set()
     
@@ -51,18 +45,14 @@ def detect_cycles(graph):
         if node not in visited:
             path = []
             if dfs(node, path):
-                return path # Return the path that forms the cycle
+                return path
     return None
 
 def calculate_dependents_count(tasks):
-    """
-    Enriches tasks with 'dependents_count' (number of tasks that depend on this task).
-    """
-    # 1. Build reverse graph (who depends on me?)
-    # task_id -> list of tasks that depend on it
+
     reverse_graph = {}
     
-    # Initialize for all tasks
+
     for task in tasks:
         t_id = task.get('id')
         if t_id is not None:
@@ -72,7 +62,7 @@ def calculate_dependents_count(tasks):
         t_id = task.get('id')
         deps = task.get('dependencies', [])
         
-        # Normalize deps to IDs
+
         dep_ids = []
         for d in deps:
             if isinstance(d, dict): dep_ids.append(d.get('id'))
@@ -83,7 +73,7 @@ def calculate_dependents_count(tasks):
             if dep_id in reverse_graph:
                 reverse_graph[dep_id].append(t_id)
                 
-    # 2. Update tasks
+
     for task in tasks:
         t_id = task.get('id')
         if t_id is not None:

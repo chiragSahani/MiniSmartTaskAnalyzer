@@ -115,16 +115,68 @@ document.addEventListener('DOMContentLoaded', () => {
             analyzeBtn.innerHTML = originalText;
             analyzeBtn.disabled = false;
         }
-                    </div >
-                </div >
+    });
 
-            <div class="score-indicator">
-                <div class="score-circle">
-                    ${task.score}
+    function renderStaging() {
+        taskStagingArea.innerHTML = '';
+        if (tasks.length === 0) {
+            taskStagingArea.innerHTML = '<p class="text-muted text-center mt-3">No tasks added yet.</p>';
+            return;
+        }
+        tasks.forEach(task => {
+            const div = document.createElement('div');
+            div.className = 'task-card';
+            div.innerHTML = `
+                <div class="task-header">
+                    <span class="task-id">#${task.id}</span>
+                    <span class="task-title">${task.title}</span>
+                    <span class="task-importance" title="Importance">${'★'.repeat(task.importance)}</span>
                 </div>
-                <span style="font-size: 0.7rem; color: var(--text-muted); margin-top: 0.25rem;">SCORE</span>
-            </div>
-            </div >
+                <div class="task-meta">
+                    <span><i class="fas fa-clock"></i> ${task.estimated_hours}h</span>
+                    <span><i class="fas fa-calendar"></i> ${task.due_date || 'No Date'}</span>
+                    <span><i class="fas fa-project-diagram"></i> ${task.dependencies.length} deps</span>
+                </div>
             `;
+            taskStagingArea.appendChild(div);
+        });
+    }
+
+    function renderResults(analyzedTasks, suggestions) {
+        analyzedList.innerHTML = '';
+        suggestionsList.innerHTML = '';
+
+        analyzedTasks.forEach(task => {
+            const div = document.createElement('div');
+            div.className = 'result-card';
+            div.innerHTML = `
+                <div class="result-info">
+                    <div class="result-header">
+                        <span class="task-id">#${task.id}</span>
+                        <span class="task-title">${task.title}</span>
+                    </div>
+                    <div class="task-meta">
+                        <span>Due: ${task.due_date || '-'}</span>
+                        <span>Est: ${task.estimated_hours}h</span>
+                    </div>
+                </div>
+                <div class="score-indicator">
+                    <div class="score-circle">
+                        ${Math.round(task.score)}
+                    </div>
+                    <span style="font-size: 0.7rem; color: var(--text-muted); margin-top: 0.25rem;">SCORE</span>
+                </div>
+            `;
+            analyzedList.appendChild(div);
+        });
+
+        suggestions.forEach(suggestion => {
+            const li = document.createElement('li');
+            li.textContent = suggestion;
+            suggestionsList.appendChild(li);
+        });
+
+        resultsArea.classList.remove('hidden');
+        resultsArea.scrollIntoView({ behavior: 'smooth' });
     }
 });
