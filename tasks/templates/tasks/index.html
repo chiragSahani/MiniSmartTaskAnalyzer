@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 
+<!DOCTYPE html>
+<html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,6 +11,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
     {% load static %}
     <link rel="stylesheet" href="{% static 'tasks/style.css' %}">
 </head>
@@ -18,17 +22,14 @@
         <nav class="navbar">
             <a href="#" class="brand">
                 <div class="brand-icon">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                        stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M12 2v20M2 12h20M12 2l4 4m-4-4l-4 4" />
-                    </svg>
+                    <i class="ph ph-check-square" style="font-size: 24px;"></i>
                 </div>
                 Smart Task Analyzer
             </a>
             <div class="nav-actions">
                 <a href="https://github.com/chiragSahani/MiniSmartTaskAnalyzer" target="_blank"
                     class="btn btn-secondary btn-sm">
-                    View on GitHub
+                    <i class="ph ph-github-logo"></i> View on GitHub
                 </a>
             </div>
         </nav>
@@ -39,8 +40,10 @@
                 <aside class="input-column">
                     <div class="card">
                         <div class="tabs-nav">
-                            <button class="tab-btn active" data-tab="single">New Task</button>
-                            <button class="tab-btn" data-tab="bulk">Bulk Import</button>
+                            <button class="tab-btn active" data-tab="single"><i class="ph ph-plus"></i> New
+                                Task</button>
+                            <button class="tab-btn" data-tab="bulk"><i class="ph ph-upload-simple"></i> Bulk
+                                Import</button>
                         </div>
 
                         <div id="single-tab" class="tab-pane active">
@@ -85,9 +88,7 @@
                                 </div>
 
                                 <button type="submit" class="btn btn-primary btn-block">
-                                    <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
-                                        <path d="M12 5v14M5 12h14" />
-                                    </svg>
+                                    <i class="ph ph-plus-circle" style="font-size: 1.1em;"></i>
                                     Add Task
                                 </button>
                             </form>
@@ -100,7 +101,8 @@
                                     <textarea id="bulk-json" class="form-control"
                                         placeholder='[{"title": "Task A", "importance": 8, "estimated_hours": 2}]'></textarea>
                                 </div>
-                                <button id="load-bulk-btn" class="btn btn-secondary btn-block">Load JSON</button>
+                                <button id="load-bulk-btn" class="btn btn-secondary btn-block"><i
+                                        class="ph ph-download-simple"></i> Load JSON</button>
                             </div>
                         </div>
                     </div>
@@ -113,21 +115,15 @@
                             <h2 class="card-title">Task Queue</h2>
                             <div class="actions">
                                 <button id="clear-tasks-btn" class="btn btn-ghost" title="Clear All">
-                                    <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
-                                        <path
-                                            d="M3 6h18M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2" />
-                                    </svg>
+                                    <i class="ph ph-trash"></i>
                                 </button>
                             </div>
                         </div>
 
                         <div id="task-staging-area" class="task-list">
                             <div class="empty-state">
-                                <svg width="48" height="48" fill="none" stroke="var(--text-muted)" stroke-width="1.5"
-                                    style="margin-bottom: 1rem;">
-                                    <path
-                                        d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
-                                </svg>
+                                <i class="ph ph-clipboard-text"
+                                    style="font-size: 48px; color: var(--text-muted); margin-bottom: 1rem;"></i>
                                 <p>Your task list is empty.</p>
                                 <small>Add tasks from the left panel to get started.</small>
                             </div>
@@ -145,7 +141,7 @@
                                     </select>
                                 </div>
                                 <button id="analyze-btn" class="btn btn-primary" style="flex: 1;">
-                                    Analyze & Prioritize
+                                    <i class="ph ph-lightning"></i> Analyze & Prioritize
                                 </button>
                             </div>
                         </div>
@@ -160,11 +156,8 @@
                         <div class="col-side">
                             <div class="suggestion-box">
                                 <h3>
-                                    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"
-                                        style="margin-right: 0.5rem; vertical-align: text-bottom;">
-                                        <path
-                                            d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
-                                    </svg>
+                                    <i class="ph ph-star"
+                                        style="margin-right: 0.5rem; vertical-align: text-bottom;"></i>
                                     Top 3 Focus
                                 </h3>
                                 <div id="suggestions-list" class="mini-list"></div>
