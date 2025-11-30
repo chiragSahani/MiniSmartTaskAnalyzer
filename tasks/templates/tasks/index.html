@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Task Analyzer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'tasks/style.css' %}">
+</head>
+<body>
+    <div class="app-container">
+        <header>
+            <div class="logo">
+                <span class="icon">⚡</span>
+                <h1>Smart Task Analyzer</h1>
+            </div>
+            <p class="subtitle">Intelligent prioritization for your busy life.</p>
+        </header>
+
+        <main>
+            <section class="input-section">
+                <div class="card">
+                    <h2>Add Tasks</h2>
+                    <div class="tabs">
+                        <button class="tab-btn active" data-tab="single">Single Entry</button>
+                        <button class="tab-btn" data-tab="bulk">Bulk JSON</button>
+                    </div>
+
+                    <div id="single-tab" class="tab-content active">
+                        <form id="single-task-form">
+                            <div class="form-group">
+                                <label for="title">Task Title</label>
+                                <input type="text" id="title" name="title" required placeholder="e.g., Fix login bug">
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="due_date">Due Date</label>
+                                    <input type="date" id="due_date" name="due_date">
+                                </div>
+                                <div class="form-group">
+                                    <label for="estimated_hours">Est. Hours</label>
+                                    <input type="number" id="estimated_hours" name="estimated_hours" step="0.1" min="0" required placeholder="e.g., 2.5">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="importance">Importance (1-10)</label>
+                                    <input type="range" id="importance" name="importance" min="1" max="10" value="5" oninput="this.nextElementSibling.value = this.value">
+                                    <output>5</output>
+                                </div>
+                                <div class="form-group">
+                                    <label for="dependencies">Dependencies (IDs)</label>
+                                    <input type="text" id="dependencies" name="dependencies" placeholder="e.g., 1, 2">
+                                    <small>Comma separated IDs</small>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="id">Task ID (Optional)</label>
+                                <input type="number" id="id" name="id" placeholder="Unique ID for dependencies">
+                            </div>
+                            <button type="submit" class="btn primary">Add to List</button>
+                        </form>
+                    </div>
+
+                    <div id="bulk-tab" class="tab-content">
+                        <textarea id="bulk-json" placeholder='[
+  {
+    "id": 1,
+    "title": "Task A",
+    "estimated_hours": 2,
+    "importance": 8
+  }
+]'></textarea>
+                        <button id="load-bulk-btn" class="btn secondary">Load JSON</button>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="header-row">
+                        <h2>Task List</h2>
+                        <button id="clear-tasks-btn" class="btn text-danger">Clear</button>
+                    </div>
+                    <div id="task-staging-area" class="task-list">
+                        <!-- Staged tasks go here -->
+                        <div class="empty-state">No tasks added yet.</div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="analysis-section">
+                <div class="controls">
+                    <div class="strategy-selector">
+                        <label for="strategy">Prioritization Strategy:</label>
+                        <select id="strategy">
+                            <option value="smart_balance">Smart Balance (Recommended)</option>
+                            <option value="fastest_wins">Fastest Wins</option>
+                            <option value="high_impact">High Impact</option>
+                            <option value="deadline_driven">Deadline Driven</option>
+                        </select>
+                    </div>
+                    <button id="analyze-btn" class="btn primary large">Analyze & Prioritize</button>
+                </div>
+
+                <div id="results-area" class="results-grid hidden">
+                    <div class="col-main">
+                        <h3>Prioritized Tasks</h3>
+                        <div id="analyzed-list" class="task-list"></div>
+                    </div>
+                    <div class="col-side">
+                        <div class="suggestion-card">
+                            <h3>✨ Top 3 Suggestions</h3>
+                            <div id="suggestions-list" class="mini-list"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+    <script src="{% static 'tasks/app.js' %}"></script>
+</body>
+</html>
